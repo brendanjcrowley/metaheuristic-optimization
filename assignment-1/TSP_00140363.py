@@ -92,10 +92,26 @@ class BasicTSP:
         """
         pass
     def reciprocalExchangeMutation(self, ind):
-        """
-        Your Reciprocal Exchange Mutation implementation
-        """
-        pass
+        # Generate random integer (index of first gene to swap)
+        gene1 = random.randint(0, len(ind.genSize))
+
+        # Generate random integer (index of second gene to swap)
+        gene2 = random.randint(0, len(ind.genSize))
+
+        # If both point to the same index, change the second index
+        while gene1 == gene2:
+            gene2 = random.randint(0, len(ind.genSize))
+
+        # Store the value of the gene at the first gene index
+        gene_holder = ind.genes[gene1]
+
+        # Set the value of the gene at the first gene index to the value of the gene at the second gene index
+        ind.genes[gene1] = ind.genes[gene2]
+
+        # Set the value of the gene at the first gene index to the value in the gene_holder object
+        ind.genes[gene2] = gene_holder
+
+        return ind
 
     def inversionMutation(self, ind):
         """

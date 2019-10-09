@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6d93604-eb00-484a-9b02-5bf967d6f6e0" name="Default Changelist" comment="" />
+    <list default="true" id="a6d93604-eb00-484a-9b02-5bf967d6f6e0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/TSP_00140363.py" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_00140363.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,10 +45,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TSP_00140363.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="101" column="46" selection-start-line="101" selection-start-column="46" selection-end-line="101" selection-end-column="46" />
+            <state relative-caret-position="660">
+              <caret line="113" column="18" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
               <folding>
-                <marker date="1570632264068" expanded="true" signature="2811:2901" ph="..." />
+                <marker date="1570633477630" expanded="true" signature="3521:3611" ph="..." />
               </folding>
             </state>
           </provider>
@@ -155,10 +157,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TSP_00140363.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="101" column="46" selection-start-line="101" selection-start-column="46" selection-end-line="101" selection-end-column="46" />
+        <state relative-caret-position="660">
+          <caret line="113" column="18" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
           <folding>
-            <marker date="1570632264068" expanded="true" signature="2811:2901" ph="..." />
+            <marker date="1570633477630" expanded="true" signature="3521:3611" ph="..." />
           </folding>
         </state>
       </provider>
