@@ -122,7 +122,7 @@ class BasicTSP:
             gene2 = random.randint(0, len(ind.genSize))
         gene_holder = ind.genes[gene1]
         ind.genes[gene1] = ind.genes[gen2]
-        ind.genes[gen2] = gene_holder
+        ind.genes[gene2] = gene_holder
         return ind
 
     def crossover(self, indA, indB):
