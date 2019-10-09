@@ -101,7 +101,7 @@ class BasicTSP:
             # else (if random int is 2), child inherits Parent2's ith gene
             else:
                 child.genes[i] = indA.genes[i]
-                
+
         return child
 
     def pmxCrossover(self, indA, indB):
