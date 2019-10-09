@@ -2,7 +2,7 @@
 
 """
 Author: Brendan J Crowley
-file: TSP_00140363.py
+file: TSP_R00140363.py
 Rename this file to TSP_x.py where x is your student number 
 """
 
@@ -10,7 +10,7 @@ import random
 from Individual import *
 import sys
 
-myStudentNum = 00140363 # Replace 12345 with your student number
+myStudentNum = 140363 # Replace 12345 with your student number
 random.seed(myStudentNum)
 
 class BasicTSP:
@@ -81,9 +81,6 @@ class BasicTSP:
         pass
 
     def uniformCrossover(self, indA, indB):
-        """
-        Your Uniform Crossover Implementation
-        """
         pass
 
     def pmxCrossover(self, indA, indB):
@@ -91,17 +88,70 @@ class BasicTSP:
         Your PMX Crossover Implementation
         """
         pass
+    
     def reciprocalExchangeMutation(self, ind):
-        """
-        Your Reciprocal Exchange Mutation implementation
-        """
-        pass
+        # Generate random integer (index of first gene to swap)
+        gene1 = random.randint(0, len(ind.genSize))
+
+        # Generate random integer (index of second gene to swap)
+        gene2 = random.randint(0, len(ind.genSize))
+
+        # If both point to the same index, change the second index
+        while gene1 == gene2:
+            gene2 = random.randint(0, len(ind.genSize))
+
+        # Store the value of the gene at the first gene index
+        gene_holder = ind.genes[gene1]
+
+        # Set the value of the gene at the first gene index to the value of the gene at the second gene index
+        ind.genes[gene1] = ind.genes[gene2]
+
+        # Set the value of the gene at the first gene index to the value in the gene_holder object
+
+        return ind
 
     def inversionMutation(self, ind):
-        """
-        Your Inversion Mutation implementation
-        """
-        pass
+        # Randomly generate an integer (index of one of the swapping points)
+        gene1 = None
+        gene2 = None
+        # If both index points are None or the same, re-generate new index
+        # points
+        while gene1 == gene2:
+            # Randomly generate an integer (index of one of the swapping points)
+            gene1 = random.randint(0, len(ind.genSize))
+
+            # Randomly generate an integer (index of one of the swapping points)
+            gene2 = random.randint(0, len(ind.genSize))
+        i = 0
+        j = 0
+        # If the first number generated is greater than the 2nd, set i = 2nd
+        # index generated
+        if gene1 > gene2:
+            i = gene2
+            j = gene1
+        else:
+            i = gene1
+            j = gene2
+            
+        # Double-ended search
+        # While the lower index is less than the higher index:
+        while i < j:
+            # Store the value of the child's ith gene
+            gene_holder = ind.genes[i]
+
+            # Replace the value of the child's ith gene with the value in the
+            # child's jth gene
+            ind.genes[i] = ind.genes[j]
+
+            # Replace the value of the child's jth gene with the value in the
+            # gene holder (the original value in the child's ith gene)
+            ind.genes[j] = gene_holder
+
+            #Increment i, decrement j
+            i += 1
+            j -= 1
+        
+        return ind
 
     def crossover(self, indA, indB):
         """
