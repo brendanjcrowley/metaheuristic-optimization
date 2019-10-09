@@ -2,7 +2,7 @@
 
 """
 Author: Brendan J Crowley
-file: TSP_00140363.py
+file: TSP_R00140363.py
 Rename this file to TSP_x.py where x is your student number 
 """
 
@@ -10,7 +10,7 @@ import random
 from Individual import *
 import sys
 
-myStudentNum = 00140363 # Replace 12345 with your student number
+myStudentNum = 140363 # Replace 12345 with your student number
 random.seed(myStudentNum)
 
 class BasicTSP:
@@ -81,34 +81,14 @@ class BasicTSP:
         pass
 
     def uniformCrossover(self, indA, indB):
-        """Executes a uniform crossover and returns a new individual
-        :param ind1: The first parent (or individual)
-        :param ind2: The second parent (or individual)
-        :returns: A new individual"""
-
-        child = Individual(self.genSize)
-
-        # For each gene point:
-        for i in range(0, self.genSize):
-
-            # Generate random int (1 or 2)
-            parent_choice = random.randint(1,2)
-
-            # If random int is 1, child inherits Parent1's ith gene
-            if parent_choice == 1:
-                child.genes[i] = indA.genes[i]
-
-            # else (if random int is 2), child inherits Parent2's ith gene
-            else:
-                child.genes[i] = indA.genes[i]
-                
-        return child
+        pass
 
     def pmxCrossover(self, indA, indB):
         """
         Your PMX Crossover Implementation
         """
         pass
+    
     def reciprocalExchangeMutation(self, ind):
         # Generate random integer (index of first gene to swap)
         gene1 = random.randint(0, len(ind.genSize))
