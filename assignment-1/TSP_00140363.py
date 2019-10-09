@@ -116,10 +116,14 @@ class BasicTSP:
         pass
 
     def inversionMutation(self, ind):
-        """
-        Your Inversion Mutation implementation
-        """
-        pass
+        gene1 = random.randint(0, len(ind.genSize))
+        gene2 = random.randint(0, len(ind.genSize))
+        while gene1 == gene2:
+            gene2 = random.randint(0, len(ind.genSize))
+        gene_holder = ind.genes[gene1]
+        ind.genes[gene1] = ind.genes[gen2]
+        ind.genes[gen2] = gene_holder
+        return ind
 
     def crossover(self, indA, indB):
         """
