@@ -80,7 +80,7 @@ class BasicTSP:
         fitness_dict = dict()
         count = 0
         # For each individual in the population
-        for individual in population:
+        for individual in self.population:
             # Set a lower bound
             lower = total_fitness
             if total_fitness > 0:
@@ -97,25 +97,26 @@ class BasicTSP:
         for key in fitness_dict:
             # Modify values to be in the range (0, 1)
             fitness_dict[key] = ((fitness_dict[key][0]/total_fitness),
-                                 (fitness_dict[key][1]/total_fitness))
+                                 (fitness_dict[key][1]/total_fitness),
+                                 fitness_dict[key][2])
         # Setting N size
         # SUS will take approx. 2/3 of the current population size
         new_sample = []
         size = ((len(self.population)/3)*2)
-        first_point = (total_fitness)/size
-        interval = random.rand(0, first_point)
+        first_point = 1/size
+        interval = random.uniform(0, first_point)
         check = 0
-        while interval < (1 - first_point):
-            indiv = fitness_check[check]
+        while interval < (1):
+            indiv = fitness_dict[check]
             lower = indiv[0]
             upper = indiv[1]
             person = indiv[2]
-            if interval <= upper and interval >= lower:
+            if interval <= upper:
                 new_sample += [person]
                 interval += first_point
             else:
                 check += 1
-        return new_samples
+        return new_sample
             
         
 
