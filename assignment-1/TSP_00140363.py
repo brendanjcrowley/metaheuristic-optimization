@@ -3,7 +3,6 @@
 """
 Author: Brendan J Crowley
 file: TSP_R00140363.py
-Rename this file to TSP_x.py where x is your student number 
 """
 
 import random
@@ -121,7 +120,64 @@ class BasicTSP:
         
 
     def uniformCrossover(self, indA, indB):
-        pass
+        """Executes a uniform crossover and returns a new individual
+        :param ind1: The first parent (or individual)
+        :param ind2: The second parent (or individual)
+        :returns: A new individual"""
+
+        child = Individual(self.genSize)
+
+        # Select random parent to inherit initial genes from
+        parent = random.randint(0,1)
+        parent1 = indA
+        parent2 = indB
+        if parent == 0:
+            parent1 = indB
+            parent2 = indA
+
+        # Keep track of values already checked
+        values_crossed = []
+        
+        # For each gene in the selected parent
+        for i in range(len(parent1.genes)):
+            
+            # Randomly decide if the current gene is being kept
+            cross = random.randint(0,1)
+
+            # If the gene is selected:
+            if cross == 1:
+
+                # Set the child's gene as the same as the parent, and add
+                # the value to the tracker
+                child.genes[i] = parent1.genes[i]
+                values_crossed += [parent1.genes[i]]
+                
+            else:
+                # Otherwise, set the current gene as none
+                child.genes[i] = None
+        j = 0
+
+        # For each gene in the other parent
+        while j < len(parent2.genes):
+
+            # If the current gene has a value, continue
+            if child.genes[j] != None:
+                j += 1
+
+            # Otherwise
+            elif child.genes[j] == None:
+
+                # If the current value hasn't been selected previously
+                over = parent2.genes[j]
+                if over not in values_crossed:
+
+                    # Add the value to the checked values, and update the child
+                    # with the new gene
+                    values_crossed += [over]
+                    child.genes[j] = over
+                # Continue
+                j += 1
+        return child
 
     def pmxCrossover(self, indA, indB):
         """
