@@ -9,7 +9,7 @@ import random
 from Individual import *
 import sys
 
-myStudentNum = 00140363 # Replace 12345 with your student number
+myStudentNum = 140363 # Replace 12345 with your student number
 random.seed(myStudentNum)
 
 class BasicTSP:
@@ -74,10 +74,50 @@ class BasicTSP:
         return [indA, indB]
 
     def stochasticUniversalSampling(self):
-        """
-        Your stochastic universal sampling Selection Implementation
-        """
-        pass
+        # Calculate fitnesses/total fitness
+        total_fitness = 0
+        fitness_dict = dict()
+        count = 0
+        # For each individual in the population
+        for individual in self.population:
+            # Set a lower bound
+            lower = total_fitness
+            if total_fitness > 0:
+                lower += 1
+            # Set an upper bound
+            upper = total_fitness + individual.getFitness()
+            # Add individual to fitness dictionary with value (lower bound,
+            # upper bound)
+            fitness_dict[count] = (lower, upper, individual)
+            # Update total_fitness
+            total_fitness += individual.getFitness()
+            count += 1
+        # For each individual in the dictionary
+        for key in fitness_dict:
+            # Modify values to be in the range (0, 1)
+            fitness_dict[key] = ((fitness_dict[key][0]/total_fitness),
+                                 (fitness_dict[key][1]/total_fitness),
+                                 fitness_dict[key][2])
+        # Setting N size
+        # SUS will take approx. 2/3 of the current population size
+        new_sample = []
+        size = ((len(self.population)/3)*2)
+        first_point = 1/size
+        interval = random.uniform(0, first_point)
+        check = 0
+        while interval < (1):
+            indiv = fitness_dict[check]
+            lower = indiv[0]
+            upper = indiv[1]
+            person = indiv[2]
+            if interval <= upper:
+                new_sample += [person]
+                interval += first_point
+            else:
+                check += 1
+        return new_sample
+            
+        
 
     def uniformCrossover(self, indA, indB):
         """Executes a uniform crossover and returns a new individual
@@ -138,24 +178,76 @@ class BasicTSP:
                 # Continue
                 j += 1
         return child
-        
 
     def pmxCrossover(self, indA, indB):
         """
         Your PMX Crossover Implementation
         """
         pass
+    
     def reciprocalExchangeMutation(self, ind):
-        """
-        Your Reciprocal Exchange Mutation implementation
-        """
-        pass
+        # Generate random integer (index of first gene to swap)
+        gene1 = random.randint(0, len(ind.genSize))
+
+        # Generate random integer (index of second gene to swap)
+        gene2 = random.randint(0, len(ind.genSize))
+
+        # If both point to the same index, change the second index
+        while gene1 == gene2:
+            gene2 = random.randint(0, len(ind.genSize))
+
+        # Store the value of the gene at the first gene index
+        gene_holder = ind.genes[gene1]
+
+        # Set the value of the gene at the first gene index to the value of the gene at the second gene index
+        ind.genes[gene1] = ind.genes[gene2]
+
+        # Set the value of the gene at the first gene index to the value in the gene_holder object
+
+        return ind
 
     def inversionMutation(self, ind):
-        """
-        Your Inversion Mutation implementation
-        """
-        pass
+        # Randomly generate an integer (index of one of the swapping points)
+        gene1 = None
+        gene2 = None
+        # If both index points are None or the same, re-generate new index
+        # points
+        while gene1 == gene2:
+            # Randomly generate an integer (index of one of the swapping points)
+            gene1 = random.randint(0, len(ind.genSize))
+
+            # Randomly generate an integer (index of one of the swapping points)
+            gene2 = random.randint(0, len(ind.genSize))
+        i = 0
+        j = 0
+        # If the first number generated is greater than the 2nd, set i = 2nd
+        # index generated
+        if gene1 > gene2:
+            i = gene2
+            j = gene1
+        else:
+            i = gene1
+            j = gene2
+            
+        # Double-ended search
+        # While the lower index is less than the higher index:
+        while i < j:
+            # Store the value of the child's ith gene
+            gene_holder = ind.genes[i]
+
+            # Replace the value of the child's ith gene with the value in the
+            # child's jth gene
+            ind.genes[i] = ind.genes[j]
+
+            # Replace the value of the child's jth gene with the value in the
+            # gene holder (the original value in the child's ith gene)
+            ind.genes[j] = gene_holder
+
+            #Increment i, decrement j
+            i += 1
+            j -= 1
+        
+        return ind
 
     def crossover(self, indA, indB):
         """
