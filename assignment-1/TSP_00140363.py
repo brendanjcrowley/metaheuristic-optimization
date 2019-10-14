@@ -172,15 +172,51 @@ class BasicTSP:
         ind.genes[gene1] = ind.genes[gene2]
 
         # Set the value of the gene at the first gene index to the value in the gene_holder object
-        ind.genes[gene2] = gene_holder
 
         return ind
 
     def inversionMutation(self, ind):
-        """
-        Your Inversion Mutation implementation
-        """
-        pass
+        # Randomly generate an integer (index of one of the swapping points)
+        gene1 = None
+        gene2 = None
+        # If both index points are None or the same, re-generate new index
+        # points
+        while gene1 == gene2:
+            # Randomly generate an integer (index of one of the swapping points)
+            gene1 = random.randint(0, len(ind.genSize))
+
+            # Randomly generate an integer (index of one of the swapping points)
+            gene2 = random.randint(0, len(ind.genSize))
+        i = 0
+        j = 0
+        # If the first number generated is greater than the 2nd, set i = 2nd
+        # index generated
+        if gene1 > gene2:
+            i = gene2
+            j = gene1
+        else:
+            i = gene1
+            j = gene2
+            
+        # Double-ended search
+        # While the lower index is less than the higher index:
+        while i < j:
+            # Store the value of the child's ith gene
+            gene_holder = ind.genes[i]
+
+            # Replace the value of the child's ith gene with the value in the
+            # child's jth gene
+            ind.genes[i] = ind.genes[j]
+
+            # Replace the value of the child's jth gene with the value in the
+            # gene holder (the original value in the child's ith gene)
+            ind.genes[j] = gene_holder
+
+            #Increment i, decrement j
+            i += 1
+            j -= 1
+        
+        return ind
 
     def crossover(self, indA, indB):
         """
