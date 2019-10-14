@@ -3,13 +3,17 @@
 """
 Author: Brendan J Crowley
 file: TSP_R00140363.py
+<<<<<<< HEAD
+=======
+Rename this file to TSP_x.py where x is your student number 
+>>>>>>> Assignment1
 """
 
 import random
 from Individual import *
 import sys
 
-myStudentNum = 00140363 # Replace 12345 with your student number
+myStudentNum = 140363 # Replace 12345 with your student number
 random.seed(myStudentNum)
 
 class BasicTSP:
@@ -80,6 +84,7 @@ class BasicTSP:
         pass
 
     def uniformCrossover(self, indA, indB):
+<<<<<<< HEAD
         """Executes a uniform crossover and returns a new individual
         :param ind1: The first parent (or individual)
         :param ind2: The second parent (or individual)
@@ -139,17 +144,37 @@ class BasicTSP:
                 j += 1
         return child
         
+=======
+        pass
+>>>>>>> Assignment1
 
     def pmxCrossover(self, indA, indB):
         """
         Your PMX Crossover Implementation
         """
         pass
+    
     def reciprocalExchangeMutation(self, ind):
-        """
-        Your Reciprocal Exchange Mutation implementation
-        """
-        pass
+        # Generate random integer (index of first gene to swap)
+        gene1 = random.randint(0, len(ind.genSize))
+
+        # Generate random integer (index of second gene to swap)
+        gene2 = random.randint(0, len(ind.genSize))
+
+        # If both point to the same index, change the second index
+        while gene1 == gene2:
+            gene2 = random.randint(0, len(ind.genSize))
+
+        # Store the value of the gene at the first gene index
+        gene_holder = ind.genes[gene1]
+
+        # Set the value of the gene at the first gene index to the value of the gene at the second gene index
+        ind.genes[gene1] = ind.genes[gene2]
+
+        # Set the value of the gene at the first gene index to the value in the gene_holder object
+        ind.genes[gene2] = gene_holder
+
+        return ind
 
     def inversionMutation(self, ind):
         """
