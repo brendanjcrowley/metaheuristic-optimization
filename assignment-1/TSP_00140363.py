@@ -125,7 +125,7 @@ class BasicTSP:
         :param ind2: The second parent (or individual)
         :returns: A new individual"""
 
-        child = Individual(self.genSize)
+        child = Individual(self.genSize, self.data)
 
         # Select random parent to inherit initial genes from
         parent = random.randint(0,1)
@@ -155,35 +155,115 @@ class BasicTSP:
             else:
                 # Otherwise, set the current gene as none
                 child.genes[i] = None
+        
         j = 0
-
+        i = 0
         # For each gene in the other parent
-        while j < len(parent2.genes):
+        while i < len(parent2.genes):
 
             # If the current gene has a value, continue
-            if child.genes[j] != None:
-                j += 1
+            if child.genes[i] != None:
+                i += 1
 
             # Otherwise
-            elif child.genes[j] == None:
+            elif child.genes[i] == None:
 
                 # If the current value hasn't been selected previously
                 over = parent2.genes[j]
                 if over not in values_crossed:
 
-                    # Add the value to the checked values, and update the child
-                    # with the new gene
+                # Add the value to the checked values, and update the child
+                # with the new gene
                     values_crossed += [over]
-                    child.genes[j] = over
+                    child.genes[i] = over
+                    i += 1
                 # Continue
                 j += 1
         return child
 
     def pmxCrossover(self, indA, indB):
-        """
-        Your PMX Crossover Implementation
-        """
-        pass
+
+
+        child = Individual(self.genSize, self.data)
+        
+        parent1 = indA
+        parent2 = indB
+
+        # Keep track of values already checked, and their map
+        indices_checked = []
+        values_checked = []
+        value_maps = dict()
+
+        index1 = random.randint(0, len(parent1.genes)-1)
+        index2 = random.randint(0, len(parent1.genes)-1)
+
+        if index2 < index1:
+            tmp = index1
+            index1 = index2
+            index2 = tmp
+
+        for i in range(len(parent1.genes)):
+            if i < index1:
+                child.genes[i] = None
+            elif i > index2:
+                child.genes[i] = None
+            else: #index is between 2 selected
+                child.genes[i] = parent1.genes[i]
+                indices_checked += [i]
+                values_checked += [parent1.genes[i]]
+                value_maps[parent1.genes[i]] = [parent2.genes[i]]
+        print(child.genes)
+                
+        while len(indices_checked) > 0:
+            
+            current = indices_checked[0]
+            value1 = parent1.genes[current]
+            value2 = parent2.genes[current]
+            
+            if value1 == value2:
+                indices_checked.remove(current)
+                
+            else:
+                
+                cur_val2 = parent2.genes.index(value1)
+                mapped = value_maps[value1]
+                
+                while True:
+                    
+                    indices_checked.remove(current)
+                    
+                    if mapped not in list(value_maps.keys()):
+                        
+                        child.genes[cur_val2] = value2
+                        values_checked += [value2]
+                        break
+                    
+                    mapped = value_maps[mapped]
+                    
+        j = 0
+        i = 0
+        # For each gene in the other parent
+        while i < len(parent2.genes):
+
+            # If the current gene has a value, continue
+            if child.genes[i] != None:
+                i += 1
+
+            # Otherwise
+            elif child.genes[i] == None:
+
+                # If the current value hasn't been selected previously
+                over = parent2.genes[j]
+                if over not in values_checked:
+
+                # Add the value to the checked values, and update the child
+                # with the new gene
+                    values_checked += [over]
+                    child.genes[i] = over
+                    i += 1
+                # Continue
+                j += 1
+        return child
     
     def reciprocalExchangeMutation(self, ind):
         # Generate random integer (index of first gene to swap)
@@ -214,10 +294,10 @@ class BasicTSP:
         # points
         while gene1 == gene2:
             # Randomly generate an integer (index of one of the swapping points)
-            gene1 = random.randint(0, len(ind.genSize))
+            gene1 = random.randint(0, ind.genSize)
 
             # Randomly generate an integer (index of one of the swapping points)
-            gene2 = random.randint(0, len(ind.genSize))
+            gene2 = random.randint(0, ind.genSize)
         i = 0
         j = 0
         # If the first number generated is greater than the 2nd, set i = 2nd
@@ -335,13 +415,15 @@ class BasicTSP:
         print ("Total iterations: ",self.iteration)
         print ("Best Solution: ", self.best.getFitness())
 
-if len(sys.argv) < 2:
+"""if len(sys.argv) < 2:
     print ("Error - Incorrect input")
     print ("Expecting python BasicTSP.py [instance] ")
     sys.exit(0)
 
 
-problem_file = sys.argv[1]
+problem_file = sys.argv[1]"""
 
-ga = BasicTSP(sys.argv[1], 300, 0.1, 500)
-ga.search()
+ga = BasicTSP("inst-13.tsp", 100, 0.1, 500)
+parent1 = ga.population[2]
+parent2 = ga.population[1]
+r = ga.pmxCrossover(parent1, parent2)
