@@ -455,5 +455,7 @@ class BasicTSP:
 
 problem_file = sys.argv[1]"""
 
-ga = BasicTSP("inst-13.tsp", 100, 0.1, 500)
-ga.search()
+for i in range(5):
+    ga = BasicTSP("inst-13.tsp", 100, 0.1, 500)
+    ga.search()
+    print("1:", i, ga.best.getFitness())
